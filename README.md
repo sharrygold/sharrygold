@@ -10,8 +10,6 @@ transaction monitoring infrastructure at Kleros, and co-founded the creative
 studio Bulan.
 
 ### What I'm building
-- **Solace**: a platform connecting people in Nigeria with psychotherapists.
-  [solace-ng.netlify.app](https://solace-ng.netlify.app)
 - **PR Tracker**: a workout tracker for personal records and progressive
   overload. [trackmypr.netlify.app](https://trackmypr.netlify.app)
 - **Perch**: a native macOS app that keeps tasks, notes and links floating on
