@@ -12,7 +12,7 @@ studio Bulan.
 ### What I'm building
 - **PR Tracker**: a workout tracker for personal records and progressive
   overload. [trackmypr.netlify.app](https://trackmypr.netlify.app)
-- **Perch**: a native macOS app that keeps tasks, notes and links floating on
+- **Remi**: a native macOS app that keeps tasks, notes and links floating on
   your screen. In progress.
 
 Case studies and writing on my [portfolio](https://sharry.netlify.app).
