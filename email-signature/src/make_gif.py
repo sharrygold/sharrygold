@@ -4,6 +4,7 @@ import math, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'site', 'img', 'now-shipping.gif')
+MODE = sys.argv[2] if len(sys.argv) > 2 else 'chip'   # chip | bare | white
 
 K = 2                      # render scale (retina)
 H = 28 * K                 # chip height
@@ -14,6 +15,10 @@ RADIUS = 6 * K
 BG = (244, 241, 234)       # warm paper, the "bookplate"
 INK = (26, 26, 26)
 MUTED = (104, 100, 94)
+if MODE == 'bare':
+    INK = (112, 112, 112)
+    MUTED = (118, 118, 118)
+    PAD_L, PAD_R = 0, 2 * K
 
 NAME_FONT = ImageFont.truetype('/usr/share/fonts/opentype/inter/Inter-SemiBold.otf', 13 * K)
 DESC_FONT = ImageFont.truetype('/usr/share/fonts/opentype/inter/Inter-Regular.otf', 13 * K)
@@ -57,13 +62,21 @@ W += W % 2  # even, so the 1x size is exact
 
 def chip():
     base = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(base).rounded_rectangle([0, 0, W - 1, H - 1], RADIUS, fill=BG + (255,))
+    d = ImageDraw.Draw(base)
+    if MODE == 'chip':
+        d.rounded_rectangle([0, 0, W - 1, H - 1], RADIUS, fill=BG + (255,))
+    elif MODE == 'white':
+        d.rectangle([0, 0, W - 1, H - 1], fill=(255, 255, 255, 255))
+    else:  # bare: transparent, but give place() a full clip mask
+        base.putalpha(1)
     return base
 
 
 def place(layer, dy, alpha):
     frame = chip()
-    mask = frame.getchannel('A')
+    mask = frame.getchannel('A').point(lambda v: 255 if v else 0)
+    if MODE == 'bare':
+        frame = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     lay = layer.copy()
     if alpha < 1:
         a = lay.getchannel('A').point(lambda v: int(v * alpha))
@@ -95,7 +108,7 @@ for i, layer in enumerate(layers):
 
 
 def to_p(frame):
-    rgb = Image.new('RGB', frame.size, (255, 255, 255))
+    rgb = Image.new('RGB', frame.size, MUTED if MODE == 'bare' else (255, 255, 255))
     rgb.paste(frame, mask=frame.getchannel('A'))
     p = rgb.quantize(colors=255, method=Image.MEDIANCUT, dither=Image.NONE)
     pal = p.getpalette()[:255 * 3] + [255, 255, 255]
