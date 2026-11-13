@@ -4,29 +4,29 @@ import math, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'site', 'img', 'now-shipping.gif')
-MODE = sys.argv[2] if len(sys.argv) > 2 else 'chip'   # chip | bare | white
+MODE = sys.argv[2] if len(sys.argv) > 2 else 'bare'   # bare (chosen) | chip | white
 
 K = 2                      # render scale (retina)
 H = 28 * K                 # chip height
 PAD_L, PAD_R = 6 * K, 12 * K
 ICON = 18 * K
 GAP = 8 * K
+SEP = '\u00b7'             # middle dot between name and description, like the links row
 RADIUS = 6 * K
 BG = (244, 241, 234)       # warm paper, the "bookplate"
 INK = (26, 26, 26)
 MUTED = (104, 100, 94)
 if MODE == 'bare':
-    INK = (112, 112, 112)
-    MUTED = (118, 118, 118)
+    INK = MUTED = (107, 107, 107)   # same grey as the title line (#6b6b6b)
     PAD_L, PAD_R = 0, 2 * K
 
 NAME_FONT = ImageFont.truetype('/usr/share/fonts/opentype/inter/Inter-SemiBold.otf', 13 * K)
 DESC_FONT = ImageFont.truetype('/usr/share/fonts/opentype/inter/Inter-Regular.otf', 13 * K)
 
 PRODUCTS = [
-    ('remi_icon_72.png', 'Remi for Mac', 'a little bird that remembers for you'),
-    ('pr_icon_288.png', 'PR Tracker', 'gym progress and personal records'),
-    ('solace_icon_72.png', 'Solace', 'private therapy with verified psychologists'),
+    ('remi_icon_72.png', 'Remi for Mac', 'A little bird that remembers for you'),
+    ('pr_icon_288.png', 'PR Tracker', 'Gym progress and personal records'),
+    ('solace_icon_72.png', 'Solace', 'Private therapy with verified psychologists'),
 ]
 
 HOLD_MS = 2600
@@ -42,7 +42,8 @@ def text_w(font, s):
 def content(icon_file, name, desc):
     icon = Image.open(os.path.join(HERE, icon_file)).convert('RGBA').resize((ICON, ICON), Image.LANCZOS)
     nw, dw = text_w(NAME_FONT, name), text_w(DESC_FONT, desc)
-    w = ICON + GAP + nw + GAP + dw
+    sw = text_w(DESC_FONT, SEP)
+    w = ICON + GAP + nw + GAP + sw + GAP + dw
     layer = Image.new('RGBA', (w, H), (0, 0, 0, 0))
     layer.alpha_composite(icon, (0, (H - ICON) // 2))
     d = ImageDraw.Draw(layer)
@@ -51,7 +52,8 @@ def content(icon_file, name, desc):
     cap = NAME_FONT.getbbox('H')
     y = (H - (cap[3] - cap[1])) // 2 - cap[1]
     d.text((ICON + GAP, y), name, font=NAME_FONT, fill=INK)
-    d.text((ICON + GAP + nw + GAP, y), desc, font=DESC_FONT, fill=MUTED)
+    d.text((ICON + GAP + nw + GAP, y), SEP, font=DESC_FONT, fill=MUTED)
+    d.text((ICON + GAP + nw + GAP + sw + GAP, y), desc, font=DESC_FONT, fill=MUTED)
     return layer
 
 
@@ -101,10 +103,16 @@ for i, layer in enumerate(layers):
     nxt = layers[(i + 1) % n]
     for s in range(1, STEPS + 1):          # current slides up and out
         t = ease(s / STEPS)
-        frames.append(place(layer, -SHIFT * t, 1 - t)); durations.append(STEP_MS)
+        if MODE == 'bare':  # GIFs can't fade without a background, so roll like a ticker instead
+            frames.append(place(layer, -H * 0.7 * t, 1)); durations.append(STEP_MS)
+        else:
+            frames.append(place(layer, -SHIFT * t, 1 - t)); durations.append(STEP_MS)
     for s in range(1, STEPS):              # next slides up and in
         t = ease(s / STEPS)
-        frames.append(place(nxt, SHIFT * (1 - t), t)); durations.append(STEP_MS)
+        if MODE == 'bare':
+            frames.append(place(nxt, H * 0.7 * (1 - t), 1)); durations.append(STEP_MS)
+        else:
+            frames.append(place(nxt, SHIFT * (1 - t), t)); durations.append(STEP_MS)
 
 
 def to_p(frame):

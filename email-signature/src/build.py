@@ -34,7 +34,7 @@ FULL = f'''<table cellpadding="0" cellspacing="0" border="0" role="presentation"
 <tr><td style="padding:4px 0 0 0;line-height:18px;">{link(PORTFOLIO, 'Portfolio')}{DOT}{link(LINKEDIN, 'LinkedIn')}{DOT}{link(GITHUB, 'GitHub')}</td></tr>
 <tr><td style="padding:12px 0 10px 0;"><table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr><td width="28" height="1" style="width:28px;height:1px;background-color:{RULE};font-size:1px;line-height:1px;">&nbsp;</td></tr></table></td></tr>
 <tr><td style="font-family:{SANS};font-size:10px;line-height:14px;letter-spacing:1.4px;text-transform:uppercase;color:{MUTED};padding:0 0 6px 0;">BUILT AND LIVE</td></tr>
-<tr><td style="padding:0;"><a href="{SHIPPING_LINK}" target="_blank" style="text-decoration:none;"><img src="{BASE}/now-shipping.gif" width="355" height="28" alt="Built and live: Remi for Mac, PR Tracker and Solace" style="display:block;border:0;outline:none;width:355px;max-width:100%;height:auto;"></a></td></tr>
+<tr><td style="padding:0;"><a href="{SHIPPING_LINK}" target="_blank" style="text-decoration:none;"><img src="{BASE}/now-shipping.gif" width="351" height="28" alt="Built and live: Remi for Mac, PR Tracker and Solace" style="display:block;border:0;outline:none;width:351px;max-width:100%;height:auto;"></a></td></tr>
 </table>'''
 
 SHORT = f'''<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;">
