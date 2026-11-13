@@ -29,7 +29,7 @@ def link(href, text):
 DOT = f'<span style="color:#a6a6a6;font-family:{SANS};font-size:13px;">&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>'
 
 FULL = f'''<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;">
-<tr><td style="font-family:{SERIF};font-size:15px;line-height:20px;color:{INK};padding:0;">Sharon Praise-Akpunne</td></tr>
+<tr><td style="font-family:{SERIF};font-size:16px;line-height:21px;color:{INK};padding:0;">Sharon Praise-Akpunne</td></tr>
 <tr><td style="font-family:{SERIF};font-style:italic;font-size:13px;line-height:18px;color:{MUTED};padding:0;">Product &amp; project manager, PMP<sup style="font-size:9px;line-height:0;vertical-align:super;">&reg;</sup></td></tr>
 <tr><td style="padding:4px 0 0 0;line-height:18px;">{link(PORTFOLIO, 'Portfolio')}{DOT}{link(LINKEDIN, 'LinkedIn')}{DOT}{link(GITHUB, 'GitHub')}</td></tr>
 <tr><td style="padding:12px 0 10px 0;"><table cellpadding="0" cellspacing="0" border="0" role="presentation"><tr><td width="28" height="1" style="width:28px;height:1px;background-color:{RULE};font-size:1px;line-height:1px;">&nbsp;</td></tr></table></td></tr>
