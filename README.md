@@ -13,7 +13,9 @@ studio Bulan.
 - **PR Tracker**: a workout tracker for personal records and progressive
   overload. [trackmypr.netlify.app](https://trackmypr.netlify.app)
 - **Remi**: a native macOS app that keeps tasks, notes and links floating on
-  your screen. In progress.
+  your screen. [remi-app.netlify.app](https://remi-app.netlify.app)
+- **Solace**: private therapy with verified psychologists and counsellors.
+  [solace.ng](https://solace.ng)
 
 Case studies and writing on my [portfolio](https://sharry.netlify.app).
 
